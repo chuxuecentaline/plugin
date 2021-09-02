@@ -1,0 +1,5 @@
+$dokka.format:javadoc-v1
+$dokka.linkExtension:html
+$dokka.location:com.yaxiu.plugin/MainActivity.Companion///PointingToDeclaration/com/yaxiu/plugin/MainActivity.Companion.html
+com.yaxiu.plugin
+

@@ -1,0 +1,73 @@
+apply plugin: 'maven-publish'
+
+apply plugin: 'signing'
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+
+                // from components.release
+                groupId 'io.github.chuxuecentaline' //开通maven central时候定义的
+                artifactId 'plugin-lib' //资源名称
+                version '0.0.1' //版本名称
+                pom {
+                    name = 'plugin-lib'
+                    description = 'plugin lib'
+                    url = 'https://github.com/chuxuecentaline/Serial'
+                    inceptionYear = '2021'
+
+                    scm {
+                        url = 'https://github.com/chuxuecentaline/Serial'
+                        connection = 'scm:git@https://github.com/chuxuecentaline/Serial.git'
+                        developerConnection = 'scm:git@https://github.com/chuxuecentaline/Serial.git'
+                    }
+
+                    license {
+                        name = 'The Apache Software License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution = 'repo'
+                        comments = 'A business-friendly OSS license'
+                    }
+                    developers {
+                        developer {
+                            id = 'yaxiu'
+                            name = 'chuxuecentaline'
+                            email = 'zhusiqi1993@163.com'
+                            url = 'https://github.com/chuxuecentaline/Serial'
+                        }
+                    }
+                    issueManagement {
+                        system = 'Github'
+                        url = 'https://github.com/chuxuecentaline/Serial'
+                    }
+                }
+
+                artifact "$rootDir/app-sources.jar" //需要上传的source jar
+                artifact "$rootDir/app-javadoc.jar" //需要上传的java doc
+                artifact "$rootDir/app.jar"
+                //需要上传的资源jar路径或者是aar路径，这边可以填写一个生成jar的task，如makeJar方法就是一个生成jar的task
+            }
+        }
+        repositories {
+            maven {
+                // 指定要上传的maven仓库
+                url = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+                //Maven仓库用户名和密码
+                credentials {
+                    username 'admin'
+                    password password
+                }
+            }
+        }
+
+    }
+    signing {
+         sign publishing.publications.maven //签名配置
+
+    }
+
+
+}
+
+
